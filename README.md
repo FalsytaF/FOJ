@@ -1,0 +1,2 @@
+# FOJ
+Fay Online Judge
