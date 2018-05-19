@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% set title = '登录' %}
+{% block main %}
+<div class="row">
+    <div class="col">
+        <h3 class="pb-2 mt-4 mb-2 ml-2 border-bottom">
+            登录
+        </h3>
+    </div>
+</div>
+<form action="/login" method="post">
+    <div class="form-group row mb-2">
+        <label for="identifier" class="col-sm-2 col-form-label">Email / 用户名</label>
+        <input id="identifier" type="text" name="id" class="col-sm-6 col-md-4 form-control" placeholder="Email / 用户名" required>
+    </div>
+    <div class="form-group row mb-2">
+        <label for="password" class="col-sm-2 col-form-label">密码</label>
+        <input id="password" type="password" name="password" class="col-sm-6 col-md-4 form-control" placeholder="密码" required>
+    </div>
+    <div class="form-row col">
+        <div class="form-group form-check">
+            <input type="checkbox" name="remember" class="form-check-input" id="remember">
+            <label class="form-check-label" for="remember">记住我</label>
+        </div>
+    </div>
+    <div class="form-row col">
+        <button type="submit" class="btn btn-primary">提交</button>
+    </div>
+</form>
+{% endblock %}

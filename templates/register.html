@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% set title = '注册' %}
+{% block main %}
+<div class="row">
+    <div class="col">
+        <h3 class="pb-2 mt-4 mb-2 border-bottom">
+            注册
+        </h3>
+    </div>
+</div>
+<form action="/register" method="post">
+    <div class="form-group row mb-2">
+        <label for="email" class="col-sm-2 col-form-label">Email</label>
+        <input id="email" type="email" name="email" class="col-sm-6 col-md-4 form-control" placeholder="Email" required>
+    </div>
+    <div class="form-group row mb-2">
+        <label for="username" class="col-sm-2 col-form-label">用户名</label>
+        <input id="username" type="text" name="username" class="col-sm-6 col-md-4 form-control" placeholder="用户名" required>
+    </div>
+    <div class="form-group row mb-2">
+        <label for="display-name" class="col-sm-2 col-form-label">昵称</label>
+        <input id="display-name" type="text" name="display_name" class="col-sm-6 col-md-4 form-control" placeholder="昵称" required>
+    </div>
+    <div class="form-group row mb-2">
+        <label for="school" class="col-sm-2 col-form-label">学校</label>
+        <input id="school" type="text" name="school" class="col-sm-6 col-md-4 form-control" placeholder="学校" required>
+    </div>
+    <div class="form-group row mb-2">
+        <label for="password" class="col-sm-2 col-form-label">密码</label>
+        <input id="password" type="password" name="password" class="col-sm-6 col-md-4 form-control" placeholder="密码" required>
+    </div>
+    <div class="form-group row mb-2">
+        <label for="confirm-password" class="col-sm-2 col-form-label">确认密码</label>
+        <input id="confirm-password" type="password" name="confirm_password" class="col-sm-6 col-md-4 form-control" placeholder="确认密码" required>
+    </div>
+    <div class="form-row col">
+        <button type="submit" class="btn btn-primary">提交</button>
+    </div>
+</form>
+{% endblock %}
+{% block script %}
+<script>
+    function checkPassword() {
+        var password = $('#password');
+        var confirmPassword = $('#confirm-password');
+        var message = '';
+        if (password.val() != confirmPassword.val()) {
+            message = '两次输入的密码不匹配';
+        }
+        confirmPassword[0].setCustomValidity(message);
+    }
+    $('#password').change(checkPassword);
+    $('#confirm-password').keyup(checkPassword);
+</script>
+{% endblock %}
