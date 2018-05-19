@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block main %}
+{% macro show_pagination(problems) %}
+<nav class="mt-3">
+    <ul class="pagination justify-content-center">
+        {% if problems.has_prev %}
+        <li class="page-item">
+            <a href="/problems?page={{ problems.prev_num }}" class="page-link">
+                <span>&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link" tabindex="-1">
+                <span>&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        {% if problems.has_next %}
+        <li class="page-item">
+            <a href="/problems?page={{ problems.next_num }}" class="page-link">
+                <span>&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link" tabindex="-1">
+                <span>&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endmacro %}
+{{ show_pagination(problems) }}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">题目</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for problem in problems.items %}
+    <tr>
+        <th scope="row">{{ problem.pid }}</th>
+        <td><a href="/problem/{{ problem.pid }}">{{ problem.title }}</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ show_pagination(problems) }}
+{% endblock %}
