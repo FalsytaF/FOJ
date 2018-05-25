@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% set title = problem.title + ' - 题目' %}
+{% block main %}
+<div class="row col justify-content-center">
+    <h3 class="pb-2 mt-4 mb-2 border-bottom">
+        {{ problem.title }}
+    </h3>
+</div>
+<nav id="nav-problem" class="navbar navbar-expand navbar-light">
+    <ul class="navbar-nav nav">
+        <li class="nav-item">
+            <a href="#tab-view-problem" class="nav-link active show" data-toggle="tab">
+                <span class="oi oi-book" title="描述"></span>
+                描述
+            </a>
+        </li>
+        <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">
+                <span class="oi oi-data-transfer-upload" title="提交"></span>
+                提交
+            </a>
+            <div class="dropdown-menu">
+                <a href="#tab-submit-by-editor" class="dropdown-item" data-toggle="tab">
+                    <span class="oi oi-pencil" title="编辑器"></span>
+                    通过编辑器提交
+                </a>
+                <a href="#tab-upload-code" class="dropdown-item" data-toggle="tab">
+                    <span class="oi oi-document" title="源代码"></span>
+                    上传源文件
+                </a>
+            </div>
+        </li>
+    </ul>
+</nav>
+<div class="tab-content">
+    <div id="tab-view-problem" class="tab-pane active">
+        <article>
+            {{ problem.content|safe }}
+        </article>
+    </div>
+    <div id="tab-submit-by-editor" class="tab-pane">
+        <form action="/problem/{{ problem.pid }}" method="post">
+            <div class="form-row col-mb-2">
+                <div class="form-group form-check-inline">
+                    <label for="language">语言</label>
+                    <select name="language" id="language" class="form-control">
+                        <option value="c++">C++</option>
+                        <option value="c">C</option>
+                        <option value="pascal">Pascal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row col mb-2">
+                    <textarea
+                            name="source_code"
+                            class="form-control"
+                            id="source-code"
+                            cols="80"
+                            rows="10">
+                    </textarea>
+            </div>
+            <div class="form-row col mb-2">
+                <button type="submit" class="btn btn-primary">提交</button>
+            </div>
+        </form>
+    </div>
+    <div id="tab-upload-code" class="tab-pane">
+        <form action="/problem/{{ problem.pid }}" method="post">
+            <div class="form-row col mb-2">
+                <div class="form-group form-check-inline">
+                    <label for="language">语言</label>
+                    <select name="language" id="language" class="form-control">
+                        <option value="c++">C++</option>
+                        <option value="c">C</option>
+                        <option value="pascal">Pascal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-group mb-2">
+                <div class="custom-file">
+                    <label for="source-file"
+                           class="custom-file-label">选择文件</label>
+                    <input type="file" class="custom-file-input" id="source-file"
+                           name="source_code">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
