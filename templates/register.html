@@ -9,6 +9,7 @@
     </div>
 </div>
 <form action="/register" method="post">
+    {{ form.csrf.token }}
     <div class="form-group row mb-2">
         <label for="email" class="col-sm-2 col-form-label">Email</label>
         <input id="email" type="email" name="email" class="col-sm-6 col-md-4 form-control" placeholder="Email" required>
