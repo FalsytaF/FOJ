@@ -65,7 +65,7 @@
         </form>
     </div>
     <div id="tab-upload-code" class="tab-pane">
-        <form action="/problem/{{ problem.pid }}" method="post">
+        <form action="/problem/{{ problem.pid }}" method="post" enctype="multipart/form-data">
             <div class="form-row col mb-2">
                 <div class="form-group form-check-inline">
                     <label for="language">语言</label>
