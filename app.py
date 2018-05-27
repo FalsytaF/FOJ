@@ -28,6 +28,7 @@ def index():
 def problem_list():
     return render_template('problems.html')
 
+
 @app.route('/problem/<pid>')
 def problem_page(pid):
     problem_path = os.path.join(cdir, 'static', 'problems', str(pid))
@@ -38,6 +39,7 @@ def problem_page(pid):
 
     return decr_html
     #return render_template('problem.html')
+
 
 @app.route('/createuser', methods=['POST'])
 def create_user():
@@ -51,18 +53,20 @@ def create_user():
 
     register_user(username=username, email=email, password=password, display_name=display_name, school=school)
 
+
 @app.route('/logincheck', methods=['POST'])
 def login_check():
     username = request.form['username']
     password = request.form['password']
 
-    real_password_hash = User.query.filter_by(username=username).first()
+    real_password_hash = User.query.filter_by(username=username).first().password
     return bcrypt.check_password_hash(real_password_hash, password)
 
 
 @app.route('/login')
 def login_page():
     return render_template('login.html')
+
 
 if __name__ == '__main__':
     app.run(port=2333, debug=True)
