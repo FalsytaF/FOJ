@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% set title = '权限组 #' + str(group.gid) %}
+{% block main %}
+{% from "macros.html" import page_header with context %}
+{% page_header() %}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">用户</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users.items %}
+    <tr>
+        <th scope="row">#{{ user.uid }}</th>
+        <td><a href="/user/{{ user.uid }}">{{ user.display_name }}</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">题目</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for problem in problems.items %}
+    <tr>
+        <th scope="row">#{{ problem.pid }}</th>
+        <td><a href="/problem/{{ problem.pid }}">{{ problem.title }}</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">比赛</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contest in contests.items %}
+    <tr>
+        <th scope="row">#{{ contest.cid }}</th>
+        <td><a href="/contest/{{ contest.cid }}">{{ contest.title }}</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
