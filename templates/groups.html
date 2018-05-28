@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% set title = '权限组' %}
+{% block main %}
+{% from "macros.html" import page_header with context %}
+{% page_header() %}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">权限组</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for group in groups.items %}
+    <tr>
+        <th scope="row">#{{ group.gid }}</th>
+        <td><a href="/group/{{ group.gid }}">{{ group.title }}</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
