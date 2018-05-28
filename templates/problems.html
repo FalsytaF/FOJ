@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block main %}
+{% from 'macros.html' import render_problems_table %}
 {% macro show_pagination(problems) %}
 <nav class="mt-3">
     <ul class="pagination justify-content-center">
@@ -33,21 +34,6 @@
 </nav>
 {% endmacro %}
 {{ show_pagination(problems) }}
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">ID</th>
-        <th scope="col">题目</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for problem in problems.items %}
-    <tr>
-        <th scope="row">#{{ problem.pid }}</th>
-        <td><a href="/problem/{{ problem.pid }}">{{ problem.title }}</a></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{{ render_problems_table(problems) }}
 {{ show_pagination(problems) }}
 {% endblock %}
