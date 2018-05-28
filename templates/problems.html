@@ -43,7 +43,7 @@
     <tbody>
     {% for problem in problems.items %}
     <tr>
-        <th scope="row">{{ problem.pid }}</th>
+        <th scope="row">#{{ problem.pid }}</th>
         <td><a href="/problem/{{ problem.pid }}">{{ problem.title }}</a></td>
     </tr>
     {% endfor %}
