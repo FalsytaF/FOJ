@@ -2,7 +2,7 @@
 {% set title = '注册' %}
 {% block main %}
 {% from "macros.html" import page_header with context %}
-{% page_header() %}
+{{ page_header() }}
 <form action="/register" method="post">
     {{ form.csrf.token }}
     <div class="form-group row mb-2">
