@@ -1,11 +1,12 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
-from flask_login import login_user, LoginManager
+from flask_login import login_user, LoginManager, current_user, login_required
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
 from problempage import md2html
-from user import User, RegisterForm
+from permission import check_problem_permission
+from user import User, RegisterForm, LoginForm
 from usermanage import register_user
 
 app = Flask(__name__)
@@ -29,12 +30,16 @@ def index():
 
 
 @app.route('/problems')
+@login_required
 def problem_list():
     return render_template('problems.html')
 
-
 @app.route('/problem/<pid>')
+@login_required
 def problem_page(pid):
+    if not check_problem_permission(current_user, pid):
+        return render_template('deny.html')
+
     problem_path = os.path.join(cdir, 'static', 'problems', str(pid))
     decr_file = os.path.join(problem_path, 'decr.md')
     with open(decr_file, 'r') as fp:
@@ -47,11 +52,17 @@ def problem_page(pid):
 
 @app.route('/logincheck', methods=['POST'])
 def login_check():
-    username = request.form['username']
-    password = request.form['password']
-
-    real_password_hash = User.query.filter_by(username=username).first()
-    return bcrypt.check_password_hash(real_password_hash, password)
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        real_password_hash = User.query.filter_by(username=username).first()
+        if bcrypt.check_password_hash(real_password_hash, password):
+            user = User.query.filter_by(username=username).first()
+            login_user(user)
+            return redirect(url_for('index'))
+        else:
+            return render_template('login.html', form=form)
 
 
 @app.route('/login')
