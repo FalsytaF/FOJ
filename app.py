@@ -34,6 +34,16 @@ def index():
 def problem_list():
     return render_template('problems.html')
 
+@app.route('/contests')
+@login_required
+def contest_list():
+    return render_template('contests.html')
+
+@app.route('/contest/<cid>')
+@login_required
+def contest_page(cid):
+    return render_template('contest.html')
+
 @app.route('/problem/<pid>')
 @login_required
 def problem_page(pid):
