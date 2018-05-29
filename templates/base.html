@@ -5,6 +5,11 @@
     <title>{{ title }} - FOJ</title>
     <link href="//cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+    {% block css %} {% endblock %}
+    {% macro import_css() %}
+    {% for css in varargs %}
+    <link rel="stylesheet" href="{{ url_for('resources/css', filename=css) }}">
+    {% endmacro %}
 </head>
 <body>
 <div class="container">
@@ -27,12 +32,23 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="/user/profile" class="nav-link">{{ user.display_name }}</a>
+                </li>
+                {% else %}
                 <li class="nav-item">
                     <a href="/login" class="nav-link">登录</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a href="/register" class="nav-link">注册</a>
                 </li>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link">登出</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
@@ -42,5 +58,9 @@
 <script src="https://cdn.bootcss.com/popper.js/1.14.3/esm/popper.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 {% block script %}{% endblock %}
+{% macro import_js() %}
+{% for js in varargs %}
+<script src="{{ url_for('resources/js', filename=js) }}"></script>
+{% endmacro %}
 </body>
 </html>
