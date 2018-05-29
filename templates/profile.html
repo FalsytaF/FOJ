@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% set title = user.display_name + ' 用户信息' %}
+{% block css %}
+{{ import_css('profile.css') }}
+{% endblock %}
+{% block main %}
+<div class="card mt-3">
+    <div class="card-body">
+        <h4 class="card-title">{{ user.display_name }}</h4>
+        {% if current_user.is_authenticated and current_user == user %}
+        <a role="button" class="btn btn-outline-primary mt-2" href="/user/modify-profile">
+            <span class="oi oi-pencil" title="更改"></span>
+            更改个人信息
+        </a>
+        {% endif %}
+        <div class="card-header mt-3">AC 过的题目：</div>
+        <ul class="list-group list-group-flush grid-like">
+            {% for problem in ac_problems.items %}
+            <li class="list-group-item grid-like">
+                <a href="/problem/{{ problem.pid }}">{{ problem.pid }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
