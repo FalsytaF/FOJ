@@ -40,6 +40,7 @@
     </div>
     <div id="tab-submit-by-editor" class="tab-pane">
         <form action="/problem/{{ problem.pid }}" method="post">
+            {{ code_form.csrf.token }}
             <div class="form-row col-mb-2">
                 <div class="form-group form-check-inline">
                     <label for="language">语言</label>
@@ -66,6 +67,7 @@
     </div>
     <div id="tab-upload-code" class="tab-pane">
         <form action="/problem/{{ problem.pid }}" method="post" enctype="multipart/form-data">
+            {{ file_form.csrf.token }}
             <div class="form-row col mb-2">
                 <div class="form-group form-check-inline">
                     <label for="language">语言</label>

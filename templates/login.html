@@ -4,6 +4,7 @@
 {% from "macros.html" import page_header with context %}
 {{ page_header() }}
 <form action="/login" method="post">
+    {{ form.csrf.token }}
     <div class="form-group row mb-2">
         <label for="identifier" class="col-sm-2 col-form-label">Email / 用户名</label>
         <input id="identifier" type="text" name="id" class="col-sm-6 col-md-4 form-control" placeholder="Email / 用户名" required>
