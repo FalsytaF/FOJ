@@ -1,39 +1,7 @@
 {% extends 'base.html' %}
 {% block main %}
-{% from 'macros.html' import render_problems_table %}
-{% macro show_pagination(problems) %}
-<nav class="mt-3">
-    <ul class="pagination justify-content-center">
-        {% if problems.has_prev %}
-        <li class="page-item">
-            <a href="/problems?page={{ problems.prev_num }}" class="page-link">
-                <span>&laquo;</span>
-            </a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a href="#" class="page-link" tabindex="-1">
-                <span>&laquo;</span>
-            </a>
-        </li>
-        {% endif %}
-        {% if problems.has_next %}
-        <li class="page-item">
-            <a href="/problems?page={{ problems.next_num }}" class="page-link">
-                <span>&raquo;</span>
-            </a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a href="#" class="page-link" tabindex="-1">
-                <span>&raquo;</span>
-            </a>
-        </li>
-        {% endif %}
-    </ul>
-</nav>
-{% endmacro %}
-{{ show_pagination(problems) }}
+{% from 'macros.html' import render_problems_table, paginate %}
+{{ paginate(problems, '/problems') }}
 {{ render_problems_table(problems) }}
-{{ show_pagination(problems) }}
+{{ paginate(problems, '/problems') }}
 {% endblock %}
