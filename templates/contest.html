@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% set title = contest.title + '- 比赛' %}
+{% set alphabet = 'abcdefghijklmnopqrstuvwxyz' %}
+{% block main %}
+{% from 'macros.html' import render_problems_table, paginate %}
+<div class="row justify-content-center">
+    <h3 class="pb-2 mt-4">{{ contest.title }}</h3>
+</div>
+<nav id="nav-problem" class="navbar navbar-expand navbar-light">
+    <ul class="navbar-nav nav">
+        <li class="nav-item">
+            <a href="#tab-home" class="nav-link active show" data-toggle="tab">
+                <span class="oi oi-home" title="主页"></span>
+                比赛主页
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#tab-submissions" class="nav-link show" data-toggle="tab">
+                <span class="oi oi-list" title="记录"></span>
+                提交记录
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#tab-leaderboard" class="nav-link show" data-toggle="tab">
+                <span class="oi oi-sort-descending" title="排行榜"></span>
+                排行榜
+            </a>
+        </li>
+    </ul>
+</nav>
+<div class="tab-content">
+    <div id="tab-home" class="tab-pane active">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">题目</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for problem in contests.problems.items %}
+            <tr>
+                <th scope="row">{{ alphabet[loop.index0] }}</th>
+                <td><a href="/problem/{{ problem.pid }}">{{ problem.title }}</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="tab-submissions" class="tab-pane">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">题目</th>
+                <th scope="col">提交者</th>
+                <th scope="col">结果</th>
+                <th scope="col">用时</th>
+                <th scope="col">内存</th>
+                <th scope="col">语言</th>
+                <th scope="col">文件大小</th>
+                <th scope="col">提交时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for submission in contest.submissions.items %}
+            <tr>
+                <th scope="row">
+                    <a href="/submission/{{ submission.sid }}">
+                        #{{ submission.sid }}
+                    </a>
+                </th>
+                <td>
+                    <a href="/problem/{{ submission.problem.pid }}">
+                        {{ submission.problem.title }}
+                    </a>
+                </td>
+                <td>
+                    <a href="/user/{{ submission.user.uid }}">
+                        {{ submission.user.display_name }}
+                    </a>
+                </td>
+                <td>
+                    <a href="/submission/{{ submission.sid }}">
+                        {{ submission.score }}
+                    </a>
+                </td>
+                <td>{{ submission.time_usage }}ms</td>
+                <td>{{ submission.memory }}kb</td>
+                <td>{{ submission.language }}</td>
+                <td>{{ submission.file_size }}kb</td>
+                <td>{{ submission.time }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {{ paginate(contest.submissions, '/contest/' + contest.cid + '/submissions') }}
+    </div>
+    <div id="tab-leaderboard" class="tab-pane">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">用户名</th>
+                <th scope="col">总分</th>
+                {% for problem in contest.problems.items %}
+                <th scope="col">
+                    <a href="/problem/{{ problem.pid }}">{{ alphabet[loop.index0] }}</a>
+                </th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td><a href="/user/{{ user.uid }}">{{ user.display_name }}</a></td>
+                <td>{{ user.total_score }}</td>
+                {% for problem in contest.problems.items %}
+                <td>
+                    <a href="/submission/{{ user.submissions[problem].sid }}">
+                        {{ user.submissions[problem].score }}
+                    </a>
+                </td>
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
