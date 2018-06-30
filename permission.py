@@ -1,4 +1,4 @@
-from app import db
+from common import db
 from permissionrecord import UserPermissionRecord, ProblemPermissionRecord
 
 def check_problem_permission(uid, pid):

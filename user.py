@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField
 from wtforms.validators import Email, DataRequired
-from app import db
+from common import db
 
 class User(db.Model):
     uid = db.Column(db.Integer, primary_key=True)

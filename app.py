@@ -2,18 +2,18 @@ import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_login import login_user, LoginManager, current_user, login_required
 from flask_bcrypt import Bcrypt
-from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost:3306/FOJ'
+
+from common import db
+
+db.init_app(app)
 
 from problempage import md2html
 from permission import check_problem_permission
 from user import User, RegisterForm, LoginForm
 from usermanage import register_user
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost:3306/FOJ'
-
-db = SQLAlchemy(app)
-db.create_all()
 
 bcrypt = Bcrypt(app)
 
